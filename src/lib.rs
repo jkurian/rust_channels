@@ -43,7 +43,6 @@ impl<T> Receiver<T> {
     pub fn recv(&mut self) -> Option<T> {
         let mut inner = self.shared.inner.lock().unwrap();
         loop {
-            println!("{} {}", inner.senders, inner.queue.len());
             match inner.queue.pop_front() {
                 Some(t) => return Some(t),
                 None if inner.senders == 0 => return None,
